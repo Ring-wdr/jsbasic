@@ -1,1 +1,1 @@
-# jsbasic
+# js기본기

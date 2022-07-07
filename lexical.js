@@ -100,3 +100,17 @@ function getFn() {
   const defVal = 100;
   const add5Fn = getFn();
   console.log(add5Fn(30) + defVal); // 135
+
+
+// optional chaining
+
+const obj = null;
+console.log('obj.id:', obj?.id);
+
+const x = '';
+const cmt = x || 'bb';
+console.log(cmt);
+const cmt2 = x ?? 'bb';
+console.log(cmt2);
+const cmt3 = x && 'bb';
+console.log('comment: ', cmt3);

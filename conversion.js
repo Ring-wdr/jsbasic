@@ -24,7 +24,7 @@ const u = {id : 1, name: 'hong'}
 console.log(u.toString)
 
 // s = {id: 1} + 2;   // 병합 연산자
-// r = x + '30';      // 병합 연산자
+// r = x + '30';      // 병합 연산자 // r = x + +'30'; === x + Number('30);
 // q = x * '30';      // 산술 연산자
 // console.log(s, typeof s, r, typeof r, q, typeof q); 
 
@@ -87,7 +87,7 @@ for (let i = 0.1; i < 1; i += 0.1){
 let a3 = 0.28
 let b3 = 0.14
 console.log("=====2번째 문제=====")
-console.log("0."+Math.trunc(a3 * 100000 + b3 * 100000))
+console.log("0."+Math.trunc(a3 * 100000 + b3 * 100000)) //round 쓰는게 낫다고 sof에 나와있다고 합니다.
 
 floatRemove = (a, b) => {
     const len = a.toString().length > b.toString().length ? a.toString().length : b.toString().length 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn1">dd</button>
+    <button id="btn2">ff</button>
+
+    <script>
+      const $btn1 = document.getElementById("btn1");
+      const $btn2 = document.getElementById("btn2");
+
+      $btn1.addEventListener("click", function () {
+        console.log("click1", this);
+        // btn
+      });
+      $btn2.addEventListener("click", () => {
+        console.log("click22!", this);
+        // window
+      });
+    </script>
+  </body>
+</html>

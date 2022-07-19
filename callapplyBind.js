@@ -48,8 +48,8 @@ const weeks = ["일", "월", "화", "수", "목", "금", "토"];
 //   if ((cnt += 1) === 8) clearInterval(intl);
 // }, 1000);
 
-const getWeekFn = function () {
-  let widx = -1;
+const getWeekFn = function (index = 0) {
+  let widx = index - 1;
   const getNextWeek = () => {
     widx += 1;
     if (widx >= weeks.length) widx = 0;
@@ -58,8 +58,10 @@ const getWeekFn = function () {
   const intl = setInterval(() => {
     console.log("call", widx + 1, getNextWeek());
     if (widx === 6) clearInterval(intl);
-  }, 1000);
+  }, 100);
   return intl;
 };
 
 getWeekFn();
+
+// getWeekFn(3);

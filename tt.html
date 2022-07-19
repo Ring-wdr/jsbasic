@@ -7,21 +7,42 @@
     <title>Document</title>
   </head>
   <body>
-    <button id="btn1">dd</button>
-    <button id="btn2">ff</button>
+    <div class="korean">
+      <button id="btn1">국어 수업 요일선택</button>
+      <span id="kor">요일을 선택하세요!</span>
+    </div>
+    <div class="math">
+      <button id="btn2">수학 수업 요일선택</button>
+      <span id="ma">요일을 선택하세요!</span>
+    </div>
 
     <script>
       const $btn1 = document.getElementById("btn1");
       const $btn2 = document.getElementById("btn2");
+      const $kor = document.getElementById("kor");
+      const $ma = document.getElementById("ma");
+      const weeks = ["일", "월", "화", "수", "목", "금", "토"];
 
-      $btn1.addEventListener("click", function () {
-        console.log("click1", this);
-        // btn
-      });
-      $btn2.addEventListener("click", () => {
-        console.log("click22!", this);
-        // window
-      });
+      const weekControl = function (subject) {
+        let weekOfKor = -1;
+        let weekOfMath = -1;
+        weekChange = () => {
+          if (subject === "korean") {
+            weekOfKor += 1;
+            $kor.innerText = `${weeks[weekOfKor % 7]}`;
+          } else if (subject === "math") {
+            weekOfMath += 1;
+            $ma.innerText = `${weeks[weekOfMath % 7]}`;
+          }
+        };
+        return weekChange;
+      };
+
+      const weekKor = weekControl("korean");
+      const weekMath = weekControl("math");
+
+      $btn1.addEventListener("click", weekKor);
+      $btn2.addEventListener("click", weekMath);
     </script>
   </body>
 </html>

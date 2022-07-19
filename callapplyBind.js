@@ -33,7 +33,6 @@ printHong("Kil-dong");
 // arrowFn.apply(kim, ['king']);
 
 console.log("-=-==-=-=-=-=--");
-const weeks = ["일", "월", "화", "수", "목", "금", "토"];
 // let widx = -1;
 // const getNextWeek = () => {
 //   widx += 1; // side-effect!
@@ -49,6 +48,7 @@ const weeks = ["일", "월", "화", "수", "목", "금", "토"];
 // }, 1000);
 
 const getWeekFn = function (index = 0) {
+  const weeks = ["일", "월", "화", "수", "목", "금", "토"];
   let widx = index - 1;
   const getNextWeek = () => {
     widx += 1;

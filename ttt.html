@@ -4,45 +4,44 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>수업 시간!!</title>
   </head>
   <body>
-    <div class="korean">
-      <button id="btn1">국어 수업 요일선택</button>
-      <span id="kor">요일을 선택하세요!</span>
+    <div class="buttonset">
+      <div class="addSubject">
+        <input type="text" />
+      </div>
+      <div class="subject">
+        <button id="btn1">국어 수업 요일선택>></button>
+        <span id="sp1">요일을 선택하세요!</span>
+      </div>
+      <div class="subject">
+        <button id="btn2">수학 수업 요일선택>></button>
+        <span id="sp2">요일을 선택하세요!</span>
+      </div>
+      <div class="subject">
+        <button id="btn3">영어 수업 요일선택>></button>
+        <span id="sp3">요일을 선택하세요!</span>
+      </div>
     </div>
-    <div class="math">
-      <button id="btn2">수학 수업 요일선택</button>
-      <span id="ma">요일을 선택하세요!</span>
-    </div>
-
     <script>
-      const $btn1 = document.getElementById("btn1");
-      const $btn2 = document.getElementById("btn2");
-      const $kor = document.getElementById("kor");
-      const $ma = document.getElementById("ma");
-      const weeks = ["일", "월", "화", "수", "목", "금", "토"];
-
-      const weekControl = function (subject) {
-        let weekOfKor = -1;
-        let weekOfMath = -1;
-        weekChange = () => {
-          if (subject === "korean") {
-            weekOfKor += 1;
-            $kor.innerText = `${weeks[weekOfKor % 7]}`;
-          } else if (subject === "math") {
-            weekOfMath += 1;
-            $ma.innerText = `${weeks[weekOfMath % 7]}`;
-          }
+      const btnArray = document.querySelectorAll(".subject button");
+      const txtArray = document.querySelectorAll(".subject span");
+      const NumberOfBtn = btnArray.length;
+      const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
+      const weekControl = (idx) => {
+        let widxArr = [];
+        for (let i = 0; i < NumberOfBtn; i += 1) widxArr[i] = -1;
+        return () => {
+          widxArr[idx] += 1;
+          txtArray[idx].innerText = `${WEEKS[widxArr[idx] % 7]}`;
         };
-        return weekChange;
       };
 
-      const weekKor = weekControl("korean");
-      const weekMath = weekControl("math");
-
-      $btn1.addEventListener("click", weekKor);
-      $btn2.addEventListener("click", weekMath);
+      for (let idx = 0; idx < NumberOfBtn; idx += 1) {
+        btnArray[idx].addEventListener("click", weekControl(idx));
+      }
     </script>
   </body>
 </html>

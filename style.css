@@ -1,0 +1,25 @@
+div.buttonset {
+  margin: 10rem;
+  max-width: 700px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid black;
+}
+
+.buttonset div {
+  margin-top: 20px;
+  width: 500px;
+  height: 100px;
+}
+
+.buttonset div button {
+  width: 200px;
+  height: 40px;
+  margin-right: 20px;
+}
+.buttonset div span {
+  width: 100px;
+}

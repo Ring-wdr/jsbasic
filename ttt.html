@@ -8,40 +8,78 @@
     <title>수업 시간!!</title>
   </head>
   <body>
-    <div class="buttonset">
-      <div class="addSubject">
-        <input type="text" />
-      </div>
-      <div class="subject">
+    <div class="title">
+      수업 요일을 정하자!!
+      <form id="subInput">
+        <input type="text" placeholder="추가할 과목을 입력하시오" />
+      </form>
+    </div>
+    <ul id="buttonset">
+      <li class="subject">
         <button id="btn1">국어 수업 요일선택>></button>
         <span id="sp1">요일을 선택하세요!</span>
-      </div>
-      <div class="subject">
+      </li>
+      <li class="subject">
         <button id="btn2">수학 수업 요일선택>></button>
         <span id="sp2">요일을 선택하세요!</span>
-      </div>
-      <div class="subject">
+      </li>
+      <li class="subject">
         <button id="btn3">영어 수업 요일선택>></button>
         <span id="sp3">요일을 선택하세요!</span>
-      </div>
-    </div>
+      </li>
+    </ul>
     <script>
-      const btnArray = document.querySelectorAll(".subject button");
-      const txtArray = document.querySelectorAll(".subject span");
-      const NumberOfBtn = btnArray.length;
+      const sjList = document.getElementById("buttonset");
+      const subForm = document.getElementById("subInput");
+      const subInput = document.querySelector("#subInput input");
       const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
+
       const weekControl = (idx) => {
         let widxArr = [];
-        for (let i = 0; i < NumberOfBtn; i += 1) widxArr[i] = -1;
         return () => {
+          if (widxArr[idx] === undefined) widxArr[idx] = -1;
           widxArr[idx] += 1;
-          txtArray[idx].innerText = `${WEEKS[widxArr[idx] % 7]}`;
+          sjList.children[idx].children[1].innerText = `${
+            WEEKS[widxArr[idx] % 7]
+          }`;
         };
       };
 
-      for (let idx = 0; idx < NumberOfBtn; idx += 1) {
-        btnArray[idx].addEventListener("click", weekControl(idx));
+      const paintSubject = (newSubject) => {
+        const NumberOfBtn = sjList.childElementCount;
+        const li = document.createElement("li");
+        li.className = "subject";
+        const weekbtn = document.createElement("button");
+        weekbtn.innerText = newSubject + " 수업 요일선택>>";
+        weekbtn.id = `btn${NumberOfBtn + 1}`;
+        eventAdd(weekbtn, NumberOfBtn);
+        const span = document.createElement("span");
+        span.id = `sp${NumberOfBtn + 1}`;
+        span.innerText = "요일을 선택하세요!";
+        li.appendChild(weekbtn);
+        li.appendChild(span);
+        sjList.appendChild(li);
+      };
+      const handleSubjectSubmit = () => {
+        event.preventDefault();
+        const newSubject = subInput.value;
+        if (!newSubject) {
+          alert("값을 입력해주세요");
+          return;
+        }
+        paintSubject(newSubject);
+        subInput.value = "";
+      };
+
+      //eventListener part
+      const eventAdd = (btn, idx) => {
+        btn.addEventListener("click", weekControl(idx));
+      };
+
+      for (let idx = 0; idx < sjList.childElementCount; idx += 1) {
+        eventAdd(sjList.children[idx].children[0], idx);
       }
+      subForm.addEventListener("submit", handleSubjectSubmit);
     </script>
   </body>
 </html>

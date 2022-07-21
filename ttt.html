@@ -16,15 +16,15 @@
     </div>
     <ul id="buttonset">
       <li class="subject">
-        <button id="btn1">국어 수업 요일선택>></button>
+        <button class="btn" id="btn1">국어 수업 요일선택>></button>
         <span id="sp1">요일을 선택하세요!</span>
       </li>
       <li class="subject">
-        <button id="btn2">수학 수업 요일선택>></button>
+        <button class="btn" id="btn2">수학 수업 요일선택>></button>
         <span id="sp2">요일을 선택하세요!</span>
       </li>
       <li class="subject">
-        <button id="btn3">영어 수업 요일선택>></button>
+        <button class="btn" id="btn3">영어 수업 요일선택>></button>
         <span id="sp3">요일을 선택하세요!</span>
       </li>
     </ul>
@@ -34,16 +34,14 @@
       const subInput = document.querySelector("#subInput input");
       const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
 
-      const weekControl = (idx) => {
-        let widxArr = [];
-        return () => {
+      const weekControl = (() => {
+        const widxArr = [];
+        return (idx) => {
           if (widxArr[idx] === undefined) widxArr[idx] = -1;
           widxArr[idx] += 1;
-          sjList.children[idx].children[1].innerText = `${
-            WEEKS[widxArr[idx] % 7]
-          }`;
+          return `${WEEKS[widxArr[idx] % 7]}`;
         };
-      };
+      })();
 
       const paintSubject = (newSubject) => {
         const NumberOfBtn = sjList.childElementCount;
@@ -51,8 +49,9 @@
         li.className = "subject";
         const weekbtn = document.createElement("button");
         weekbtn.innerText = newSubject + " 수업 요일선택>>";
-        weekbtn.id = `btn${NumberOfBtn + 1}`;
-        eventAdd(weekbtn, NumberOfBtn);
+        // weekbtn.id = `btn${NumberOfBtn + 1}`;
+        weekbtn.className = "btn";
+        // eventAdd(weekbtn, NumberOfBtn);
         const span = document.createElement("span");
         span.id = `sp${NumberOfBtn + 1}`;
         span.innerText = "요일을 선택하세요!";
@@ -72,13 +71,15 @@
       };
 
       //eventListener part
-      const eventAdd = (btn, idx) => {
-        btn.addEventListener("click", weekControl(idx));
-      };
-
-      for (let idx = 0; idx < sjList.childElementCount; idx += 1) {
-        eventAdd(sjList.children[idx].children[0], idx);
-      }
+      sjList.addEventListener("click", (e) => {
+        if (e.target.className === "btn") {
+          const idx = e.target.nextElementSibling.id.replace(/[a-z]/gi, "");
+          e.target.nextElementSibling.innerText = weekControl(idx);
+        }
+      });
+      // for (let idx = 0; idx < sjList.childElementCount; idx += 1) {
+      //   eventAdd(sjList.children[idx].children[0], idx);
+      // }
       subForm.addEventListener("submit", handleSubjectSubmit);
     </script>
   </body>

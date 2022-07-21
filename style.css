@@ -1,5 +1,13 @@
-div.buttonset {
-  margin: 10rem;
+.title {
+  margin: 30px 0px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+ul#buttonset {
+  margin: auto;
   max-width: 700px;
   position: relative;
   display: flex;
@@ -7,19 +15,21 @@ div.buttonset {
   align-items: center;
   flex-direction: column;
   border: 2px solid black;
+  list-style: none;
 }
 
-.buttonset div {
+#buttonset .subject {
   margin-top: 20px;
-  width: 500px;
+  width: 400px;
   height: 100px;
 }
 
-.buttonset div button {
+#buttonset .subject button {
   width: 200px;
   height: 40px;
   margin-right: 20px;
 }
-.buttonset div span {
+.buttonset .subject span {
   width: 100px;
+  text-align: center;
 }

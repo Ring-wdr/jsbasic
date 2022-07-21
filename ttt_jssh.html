@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        margin: 5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div>
+        <button id="btn1">국어 수업</button>
+        <span id="sp1">요일을 선택하세요</span>
+      </div>
+
+      <div style="margin-top: 2rem">
+        <button id="btn2">수학 수업</button>
+        <span id="sp2">요일을 선택하세요</span>
+      </div>
+    </div>
+
+    <script>
+      const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
+
+      // const getNextWeek = (() => {
+      //   let widx = -1;
+      //   return () => {
+      //     if ((widx += 1) >= weeks.length) widx = 0;
+      //     return WEEKS[widx];
+      //   };
+      // })();
+
+      //1. 가장 즉흥적: 국어의 함수, 수학의 함수를 만듬
+      const getNextWeek1 = () => {
+        let widx = -1;
+        return () => {
+          widx += 1;
+          if (widx >= WEEKS.length) widx = 0;
+          return WEEKS[widx];
+        };
+      };
+      //review:: widx 오염못시키니까 순수함수라고 볼 수 있다
+      //but 매번 함수를 만듬.
+      //2. dom 전달
+      const getNextWeek2 = (() => {
+        return ($sp) => {
+          const curr = $sp.innerText.trim().replace("요일", "");
+          const curridx = WEEKS.indexOf(curr);
+          // if (widx >= WEEKS.length) widx = 0;
+          return `${WEEKS[curridx + 1]}요일`;
+        };
+      })();
+      //dom만 주니 사용은 간단
+      //3. 현재 값을 전달
+      const getNextWeek3 = (() => {
+        return (curr) => {
+          const curridx = WEEKS.indexOf(curr);
+          return WEEKS[curridx + 1];
+        };
+      })();
+      //
+
+      //4. obj 전달(과목 전달)
+      const getNextWeek4 = (() => {
+        const idxObj = {}; //{국어: -1 0 1 2 ...}
+        return (subject) => {
+          if (!idxObj.hasOwnProperty(subject)) {
+            idxObj[subject] = 0;
+          } else {
+            // if (idxObj[subject] >= WEEKS.length) idxObj[subject] = -1;
+            idxObj[subject] += idxObj[subject] < WEEKS.length - 1 ? 1 : -6;
+          }
+          return WEEKS[idxObj[subject]];
+        };
+      })();
+      // console을 통한 어뷰징 오염될수 있다. 순수함수에는 가까운 편
+
+      //5. caller ** (쓰는 경우 정말 드믐)
+      const getNextWeek5 = (function () {
+        // console.log(getNextWeek5.caller.name);
+        const idxObj = {}; // 국어...
+        return function wn() {
+          const subject = wn.caller.name;
+          if (!idxObj.hasOwnProperty(subject)) {
+            idxObj[subject] = 0;
+          } else {
+            // if (idxObj[subject] >= WEEKS.length) idxObj[subject] = -1;
+            idxObj[subject] += idxObj[subject] < WEEKS.length - 1 ? 1 : -6;
+          }
+          return WEEKS[idxObj[subject]];
+        };
+      })();
+      // 순수한 함수에 가장 가까움 but arrow function으로는 못 만듬
+      // 시간 있을 경우 caller을 이용해서 만들어보기
+
+      // function f() {
+      //   // console.dir(f);/
+      //   console.log("name::>>",
+      //     f.name,"\n",
+      //     "args::>>",arguments,"\n",
+      //     "caller::>>",f.caller
+      //   );
+      // }
+      // function outer() {
+      //   f(1, 2, 3);
+      // }
+
+      function outer() {
+        getNextWeek5(1, 2, 3);
+      }
+      outer();
+      window.addEventListener("load", function () {
+        const $btn1 = document.getElementById("btn1");
+        const $sp1 = document.getElementById("sp1");
+        const $btn2 = document.getElementById("btn2");
+        const $sp2 = document.getElementById("sp2");
+
+        // const fKor = getNextWeek1(); // -1
+        $btn1.addEventListener("click", function 국어(event) {
+          // $sp1.innerText = getNextWeek2($sp1);
+          // $sp1.innerText = getNextWeek3($sp1.innerText);
+          // $sp1.innerText = getNextWeek4("국어");
+          $sp1.innerText = getNextWeek5();
+        });
+
+        // const fMath = getNextWeek1(); // -1
+        $btn2.addEventListener(
+          "click",
+          (수학 = (event) => {
+            // $sp2.innerText = getNextWeek2($sp2);
+            // $sp2.innerText = getNextWeek3($sp2.innerText);
+            // $sp2.innerText = getNextWeek4("수학");
+            $sp2.innerText = getNextWeek5();
+          })
+        );
+      });
+    </script>
+  </body>
+</html>

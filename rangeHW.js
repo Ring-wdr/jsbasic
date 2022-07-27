@@ -1,49 +1,60 @@
 const getRange = (begin, end, interval) => {
   const result = [];
-  let nextElement = begin;
+
+  const forLoop = (param1, param2, param3) => {
+    for (let idx = 0; param1 <= param2; idx += 1) {
+      if (param3 > 0) {
+        result[idx] = param1;
+        param1 += param3;
+      } else {
+        result[idx] = param2;
+        param2 += param3;
+      }
+    }
+  };
+  const setInterval = () => {
+    if (interval === undefined) {
+      interval = begin < end ? 1 : -1;
+    }
+    if ((interval < 0 && begin < end) || (begin > end && interval > 0)) {
+      console.log("loop will overflow!!!");
+      return false;
+    }
+    return true;
+  };
+
   if (interval === 0) {
-    console.log("input interval!!!");
+    console.log("interval 0 is not allowed!!!");
+    return;
   }
   if (end === undefined) {
     result.length = begin;
-    for (let idx = 0; idx < begin; idx += 1) {
-      result[idx] = idx + 1;
-    }
-  } else if (begin === end) {
-    result[0] = [begin];
-  } else if (begin < end) {
-    if (interval === undefined) {
-      interval = 1;
-    }
-    for (let idx = 0; nextElement <= end; nextElement += interval) {
-      result[idx] = nextElement;
-      idx += 1;
-    }
+    forLoop(1, begin, 1);
+  } else if (begin <= end) {
+    if (setInterval()) forLoop(begin, end, interval);
   } else if (begin > end) {
-    if (interval === undefined) {
-      interval = -1;
-    }
-    for (let idx = 0; nextElement >= end; nextElement += interval) {
-      result[idx] = nextElement;
-      idx += 1;
-    }
+    if (setInterval()) forLoop(end, begin, interval);
   }
   return result;
 };
 
-const consoleArr = (...arr) => {
-  const [x, y, z] = [...arr];
+const printArr = (...arr) => {
+  // const [x, y, z] = [...arr];
   //   console.log("begin from " + x + " and end at " + y);
-  console.log(getRange(x, y, z));
+  console.time("timecount");
+  console.log(getRange(...arr));
+  console.timeEnd("timecount");
 };
 
-consoleArr(1, 10, 1); // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
-consoleArr(1, 10, 2); // [1, 3, 5, 7, 9]
-consoleArr(1, 10); // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
-consoleArr(10, 1); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-consoleArr(10, 1, -1); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-consoleArr(10, 1, -2); // [ 10, 8, 6, 4, 2 ]
-consoleArr(5); // [1, 2, 3, 4, 5]
-consoleArr(100);
+printArr(1, 10, 1); // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
+printArr(1, 10, 2); // [1, 3, 5, 7, 9]
+printArr(1, 10); // [1, 2, 3, 4,  5, 6, 7, 8, 9, 10]
+printArr(10, 1); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+printArr(10, 1, -1); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+printArr(10, 1, -2); // [ 10, 8, 6, 4, 2 ]
+printArr(5); // [1, 2, 3, 4, 5]
+printArr(100);
+// printArr(1, 10, -3); // start smaller than end but interval is minus
+// printArr(1, 10, 0);
 
 // console.log([1, 2, 3, 4, 5, 6]);

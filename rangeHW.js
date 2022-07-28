@@ -1,20 +1,26 @@
-const getRange = (...elements) => {
-  let [begin, end, interval] = elements;
+const getRange = (begin, end, interval = begin > end ? -1 : 1) => {
+  // number < undefined always return false.
+  //args가 정수인 경우 그대로 사용해도 순수 함수 ok
   const result = [];
   // if end is empty
-  end ?? ((end = begin), (begin = 1));
+  // end ?? ((end = begin), (begin = 1));
+  const temp = begin;
+  end = end ?? ((begin = 1), temp); //
   // interval treat
-  if (interval === undefined) {
-    interval = begin < end ? 1 : -1;
-  } else if (interval === 0) {
-    console.log("interval 0 is not allowed!!!");
-    return;
-  } else if ((end - begin) / interval < 0) {
-    console.log("loop will overflow!!!");
-    return;
+  // if (interval === undefined) {
+  // interval = begin < end ? 1 : -1;
+  // } else
+  // if (interval === 0) {
+  //   console.log("interval 0 is not allowed!!!");
+  //   return result;
+  // } else
+  if ((end !== begin && interval === 0) || (end - begin) * interval < 0) {
+    console.log("Wrong parameter!!!");
+    return result;
   }
 
   const cnt = parseInt((end - begin) / interval) + 1;
+  // const cnt = (end - begin) % interval + 1;
 
   const recursive = (cnt) => {
     if (cnt === 0) return;
@@ -57,10 +63,17 @@ const printArr = (...arr) => {
 // printArr(100);
 // printArr(1, 10, -3); // start smaller than end but interval is minus
 // printArr(1, 10, 0);
-printArr(10, 10);
+// printArr(10, 10);
 // printArr(1, 10, -1);/
 // console.log([1, 2, 3, 4, 5, 6]);
-
+printArr(-5); // need to be fixed
+printArr(5, 5);
+// printArr(5, 5, 0);
+printArr(5, 5, -1);
+printArr(5, 1, 1);
+printArr(1, 5, -1);
+printArr(1, 5, 6);
+// printArr(1, 5, "");// next time
 // const assertRange = (begin, end, interval, val) => {
 //   if (begin === undefined) {
 //     console.log("There's no input data.");

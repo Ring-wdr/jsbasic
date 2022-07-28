@@ -1,11 +1,14 @@
 const getRange = (begin, end, interval = begin > end ? -1 : 1) => {
   // number < undefined always return false.
   //args가 정수인 경우 그대로 사용해도 순수 함수 ok
+  // if begin >0 or < 0 => if
+  // interval = begin > end ? -1 : 1;
+
   const result = [];
   // if end is empty
   // end ?? ((end = begin), (begin = 1));
-  const temp = begin;
-  end = end ?? ((begin = 1), temp); //
+  const temp = begin >= 0 ? begin : -1;
+  end = end ?? ((begin = begin > 0 ? 1 : begin), temp);
   // interval treat
   // if (interval === undefined) {
   // interval = begin < end ? 1 : -1;
@@ -19,17 +22,20 @@ const getRange = (begin, end, interval = begin > end ? -1 : 1) => {
     return result;
   }
 
-  const cnt = parseInt((end - begin) / interval) + 1;
+  const cnt = interval ? parseInt((end - begin) / interval) + 1 : 1;
   // const cnt = (end - begin) % interval + 1;
 
-  const recursive = (cnt) => {
-    if (cnt === 0) return;
+  // (function recursive(cnt) {
+  //   if (cnt === 0) return;
+  //   result.push(begin);
+  //   begin += interval;
+  //   return recursive(cnt - 1);
+  // })(cnt);
+
+  for (let i = 0; i < cnt; i++) {
     result.push(begin);
     begin += interval;
-    return recursive(cnt - 1);
-  };
-
-  recursive(cnt);
+  }
 
   return result;
 };
@@ -66,13 +72,18 @@ const printArr = (...arr) => {
 // printArr(10, 10);
 // printArr(1, 10, -1);/
 // console.log([1, 2, 3, 4, 5, 6]);
-printArr(-5); // need to be fixed
-printArr(5, 5);
+// printArr(-5); // need to be fixed
+// printArr(5, 5);
 // printArr(5, 5, 0);
-printArr(5, 5, -1);
-printArr(5, 1, 1);
-printArr(1, 5, -1);
-printArr(1, 5, 6);
+// printArr(5, 5, -1);
+// printArr(5, 1, 1);
+// printArr(1, 5, -1);
+// printArr(1, 5, 6);
+printArr(0);
+printArr(0, 0);
+printArr(0, 0, 5);
+printArr(2, 1, -5);
+printArr(0, -1, -5);
 // printArr(1, 5, "");// next time
 // const assertRange = (begin, end, interval, val) => {
 //   if (begin === undefined) {

@@ -36,11 +36,27 @@ const powSqrtByMap = (arr) => {
     return;
   }
 
-  return [
-    arr.map((val, idx) => val * val),
-    arr.map((val, idx) => Math.sqrt(val)),
-  ];
+  return [arr.map((val, _) => val * val), arr.map((val, _) => Math.sqrt(val))];
 };
 console.log(powSqrtByForOf(arr));
 console.log(powSqrtByForEach(arr));
 console.log(powSqrtByMap(arr));
+
+// const powSqrtByForEach2 = (arr) => {
+//   if (!Array.isArray(arr)) {
+//     console.log("param is not array type!!");
+//     return;
+//   }
+
+//   const powArr = [];
+//   const sqrtArr = [];
+
+//   arr.forEach((val, idx) => {
+//     powArr[idx] = val * val;
+//     sqrtArr[idx] = Math.sqrt(val);
+//   });
+
+//   return [powArr, sqrtArr];
+// };
+
+// console.log(powSqrtByForEach2(arr));

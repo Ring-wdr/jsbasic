@@ -10,6 +10,11 @@ const calc = (arr, cb) => {
 };
 
 const powSqrtByForOf = (arr) => {
+  // if (!Array.isArray(arr) || arr.every((a) => Number.isInteger(a))) {
+  if (!Array.isArray(arr) || arr.some((a) => !Number.isInteger(a))) {
+    // isNaN.Number(a)
+    throw new Error("Only Integer array is allowed!!");
+  }
   const arrPow = calc(arr, (a) => a ** 2);
   const arrSqrt = calc(arr, Math.sqrt);
   return [arrPow, arrSqrt];
@@ -57,4 +62,21 @@ const deleteObjectArray = (arr, keyOrIdx, value) => {
   arr.filter((obj, idx) =>
     isIdx ? idx !== keyOrIdx : obj[keyOrIdx] !== value
   );
+};
+
+// reverse ans
+
+const a11 = [1, 2, 3, 4, 5];
+
+const makeReverseArray = (arr) =>
+  arr.map((_, i) => {
+    arr[arr.length - 1 - i];
+  });
+makeReverseArray(a11);
+
+const reverseArray = (arr) => {
+  const maxIdx = arr.length;
+  for (let i = 0; i < parseInt(arr.length / 2); i += 1) {
+    [arr[i], arr[maxIdx - i - i]] = [arr[maxIdx - i - i], arr[i]];
+  }
 };

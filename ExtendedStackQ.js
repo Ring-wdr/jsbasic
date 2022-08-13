@@ -2,50 +2,52 @@ class SuperStackQ {
   #privateArr;
   constructor(arr = []) {
     this.#privateArr = arr;
-    this.length = arr.length;
   }
-  get $arr() {
+  get _arr() {
     return this.#privateArr;
   }
-  clear() {
-    this.#privateArr = [];
-    this.length = 0;
-  }
-  isEmpty() {
+  get isEmpty() {
     return !this.#privateArr.length;
   }
-  peek() {
-    return this.#privateArr[this.#privateArr.length - 1];
+  get peek() {
+    if (this.constructor.name === "Stack")
+      return this.#privateArr[this.#privateArr.length - 1];
+    else if (this.constructor.name === "Queue") return this.#privateArr[0];
+  }
+  get length() {
+    return this.#privateArr.length;
+  }
+  clear() {
+    this.#privateArr.length = 0;
   }
   toArray() {
-    return this.#privateArr;
+    return [...this.#privateArr];
   }
   print() {
-    this.#privateArr.map((a) => console.log(a));
+    //stack queue별로 다르게 프린트 해야함 => overriding
+    this.#privateArr.forEach((val, idx) =>
+      console.log(this.#privateArr[this.#privateArr.length - idx - 1])
+    );
   }
 }
 
 class Stack extends SuperStackQ {
   push(num) {
-    super.$arr.push(num);
-    this.length += 1;
+    this._arr.push(num);
     return this;
   }
   pop() {
-    if (this.length) this.length -= 1;
-    return super.$arr.pop();
+    return this._arr.pop();
   }
 }
 
 class Queue extends SuperStackQ {
   enqueue(num) {
-    super.$arr.push(num);
-    this.length += 1;
+    this._arr.push(num);
     return this;
   }
   dequeue() {
-    if (this.length) this.length -= 1;
-    return super.$arr.shift();
+    return this._arr.shift();
   }
 }
 // ex1) Stack (DeepDive. 512)
@@ -71,25 +73,26 @@ queue.clear();
 console.log(queue.dequeue());
 console.log("");
 
-// length test
+// // isEmpty test
 console.log("length test");
 stack.push(3).push(3).push(3);
-console.log(stack.isEmpty());
+console.log(stack.isEmpty);
 stack.clear();
-console.log(stack.isEmpty());
+console.log(stack.isEmpty);
 
 queue.enqueue(3).enqueue(3).enqueue(3);
-console.log(queue.isEmpty());
+console.log(queue.isEmpty);
 queue.clear();
-console.log(queue.isEmpty());
+console.log(queue.isEmpty);
 console.log("");
 
 // peek test
 console.log("peek test");
 stack.push(3).push(4).push(5);
-console.log(stack.peek());
-queue.enqueue(3).enqueue(4).enqueue(5);
-console.log(queue.peek());
+console.log(stack.peek, stack.peek, stack.peek);
+
+queue.enqueue(5).enqueue(4).enqueue(3);
+console.log(queue.peek, queue.peek, queue.peek);
 // stack.clear();
 // queue.clear();
 console.log("");
@@ -98,10 +101,15 @@ console.log("");
 console.log(stack.toArray());
 console.log(queue.toArray());
 
-//print()
+// //print()
+
+console.log("print test");
+console.log("stack print: ");
 stack.print();
+console.log("queue print: ");
 queue.print();
 
 //length
+console.log("length test");
 console.log(stack.length);
 console.log(queue.length);

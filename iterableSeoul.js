@@ -1,6 +1,5 @@
 class Subway {
   #stations = [
-    "신도림",
     "신설동",
     "용두",
     "신답",
@@ -59,15 +58,30 @@ class Subway {
     this.#start = start;
     this.#end = end;
   }
+  set _start(string) {
+    this.#start = string;
+  }
+  set _end(string) {
+    this.#end = string;
+  }
 
   get startIdx() {
     return this.#stations.findIndex((station) => station === this.#start);
   }
-  get endIdx() {
-    return this.#stations.findIndex((station) => station === this.#end) + 1;
-  }
+  // get endIdx() {
+  //   return this.#stations.findIndex((station) => station === this.#end) + 1;
+  // }
   [Symbol.iterator]() {
-    return this.#stations.slice(this.startIdx, this.endIdx).values();
+    let idx = this.startIdx - 1;
+    const next = () => {
+      idx = this.#stations[idx] !== this.#end ? idx + 1 : this.#stations.length;
+      return {
+        value: this.#stations[idx],
+        done: !this.#stations[idx],
+      };
+    };
+    return { next };
+    // return this.#stations.slice(this.startIdx, this.endIdx).values();
     //범위를 정해두고 하지 말것...
   }
 
@@ -79,6 +93,12 @@ class Subway {
 
 const routes = new Subway("문래", "신림");
 routes.print();
+console.log([...routes]);
+
+routes._end = "봉천";
+console.log([...routes]);
+
+routes._start = "당산";
 console.log([...routes]);
 
 console.log("====-=-==-=========");
@@ -98,9 +118,9 @@ console.log([...routes2]);
 // console.log(it1.next());
 // console.log("============================================");
 
-// const it2 = routes2[Symbol.iterator]();
-// while (true) {
-//   const x = it2.next();
-//   console.log(x);
-//   if (x.done) break;
-// }
+const it2 = routes2[Symbol.iterator]();
+while (true) {
+  const x = it2.next();
+  console.log(x);
+  if (x.done) break;
+}

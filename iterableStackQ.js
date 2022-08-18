@@ -39,13 +39,20 @@ class Collection {
   //   }
   [Symbol.iterator]() {
     //iterator로 다시 만들기
-    let idx = this.#arr.length - 1;
-    const _arr = this.#arr;
-    return {
-      next() {
-        return { value: _arr[idx--], done: idx < -1 };
-      },
+    let idx = this.#arr.length;
+    // const _arr = this.#arr;
+    const next = () => {
+      idx -= 1;
+      return { value: this.#arr[idx], done: idx === -1 };
     };
+    return { next };
+    // let idx = this.#arr.length - 1;
+    // const _arr = this.#arr;
+    // return {
+    //   next() {
+    //     return { value: _arr[idx--], done: idx < -1 };
+    //   },
+    // };
   }
 }
 class Stack extends Collection {

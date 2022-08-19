@@ -1,5 +1,4 @@
-// p.103에서 작성한 Stack과 Queue를 iterator로 작성하시오.
-// (iterable한 클래스)
+// iter to gen
 
 class Collection {
   #arr;
@@ -34,24 +33,23 @@ class Collection {
   print(cb) {
     if (cb) cb([...this.#arr].reverse());
   }
+
   //   [Symbol.iterator]() {
-  //     return this.#arr.reverse().values();
+  //     let idx = -1;
+  //     return {
+  //       next: () => {
+  //         idx += 1;
+  //         return { value: this.#arr[idx], done: !this.#arr[idx] };
+  //       },
+  //     };
   //   }
-  [Symbol.iterator]() {
-    //iterator로 다시 만들기
-    let idx = this.#arr.length;
-    const next = () => {
-      idx -= 1;
-      return { value: this.#arr[idx], done: idx === -1 };
-    };
-    return { next };
-    // let idx = this.#arr.length - 1;
-    // const _arr = this.#arr;
-    // return {
-    //   next() {
-    //     return { value: _arr[idx--], done: idx < -1 };
-    //   },
-    // };
+
+  *[Symbol.iterator]() {
+    let idx = 0;
+    while (this.#arr[idx]) {
+      yield this.#arr[idx];
+      idx += 1;
+    }
   }
 }
 class Stack extends Collection {
@@ -80,8 +78,8 @@ console.log([...stack], [...queue]);
 for (const s of stack) console.log(s);
 for (const q of queue) console.log(q);
 
-// stack.print();
-// queue.print();
+// // stack.print();
+// // queue.print();
 
 const it2 = stack[Symbol.iterator]();
 while (true) {

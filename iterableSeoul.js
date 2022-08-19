@@ -106,6 +106,9 @@ console.log("====-=-==-=========");
 const routes2 = new Subway("구로디지털단지", "성수");
 routes2.print();
 console.log([...routes2]);
+// const routes3 = new Subway("을지로4가", "시청");
+// // routes3.print();
+// console.log([...routes3]);
 
 // console.log("============================================");
 // const it1 = routes[Symbol.iterator]();
@@ -118,9 +121,9 @@ console.log([...routes2]);
 // console.log(it1.next());
 // console.log("============================================");
 
-const it2 = routes2[Symbol.iterator]();
-while (true) {
-  const x = it2.next();
-  console.log(x);
-  if (x.done) break;
-}
+// const it2 = routes2[Symbol.iterator]();
+// while (true) {
+//   const x = it2.next();
+//   console.log(x);
+//   if (x.done) break;
+// }

@@ -82,7 +82,11 @@ class ArrayList extends Collection {
     return arr;
   }
   static arrayToList(arr) {
-    return arr.reduce((o, a, i) => ({ value: arr[i], rest: o }), undefined);
+    let node;
+    for (let i = arr.length - 1; i !== 0; i -= 1) {
+      node = { value: arr[i], rest: node };
+    }
+    return node;
     //1
     // return {
     //   value: arr[0],
@@ -94,7 +98,8 @@ class ArrayList extends Collection {
     //     value: arr[i],
     //     rest: _al(i + 1),
     //   };
-    // })();
+    // })(); //3
+    // return arr.reduce((o, a, i) => ({ value: arr[i], rest: o }), undefined);
   }
   constructor(lstOrArr) {
     super(Array.isArray(lstOrArr) ? lstOrArr : ArrayList.listToArray(lstOrArr));

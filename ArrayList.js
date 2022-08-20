@@ -39,6 +39,28 @@ class Collection {
     }
   }
 
+  get isEmpty() {
+    return !this.#arr.length;
+  }
+
+  get length() {
+    return this.#arr.length;
+  }
+  get(index) {
+    return this.#arr[index];
+  }
+
+  indexOf(value) {
+    return this.#arr.indexOf(value);
+  }
+
+  contains(value) {
+    return this.#arr.indexOf(value) !== -1;
+  }
+  _splice(...args) {
+    return this.#arr.splice(...args);
+  }
+
   get _arr() {
     return this.#arr;
   }
@@ -51,14 +73,14 @@ class ArrayList extends Collection {
   static listToArray(arrayList) {
     if (arrayList.constructor.name === "ArrayList") return [...arrayList];
     const arr = [];
-    ArrayList.recursive(arrayList, arr);
+    let node = arrayList;
+    while (node?.value) {
+      arr.push(node.value);
+      node = node.rest;
+    }
     return arr;
   }
   static arrayToList(arr) {
-    // return {
-    //   value: arr[0],
-    //   rest: ArrayList.arrayToList(arr.slice(1)),
-    // };
     return (function _al(i = 0) {
       if (i === arr.length) return;
       return {
@@ -67,49 +89,35 @@ class ArrayList extends Collection {
       };
     })();
   }
-  static recursive(obj, arr) {
-    arr.push(obj.value);
-    if (!obj.rest) return;
-    this.recursive(obj.rest, arr);
-  }
-
   #arrayList;
   constructor(arrayList = {}) {
     super();
-    if (!Array.isArray(arrayList)) {
-      this.#arrayListRecursive(arrayList);
-      // ArrayList.recursive(arrayList, this._arr);
-      this.#arrayList = arrayList;
-    } else {
+    if (Array.isArray(arrayList)) {
       this.#arrayList = {};
-      for (const element of arrayList) {
-        this.add(element);
+      arrayList.forEach((val) => this.add(val));
+    } else {
+      let node = arrayList;
+      while (node?.value) {
+        this._arr.push(node);
+        node = node.rest;
       }
+      this.#arrayList = arrayList;
     }
   }
-  #arrayListRecursive(obj) {
-    super.push(obj);
-    if (!obj.rest) return;
-    this.#arrayListRecursive(obj.rest);
-  }
 
-  add(value, addIdx = super.length) {
-    // super.peek.rest = { value };
-    // super.push(super.peek.rest);
-
+  add(value, idx = super.length) {
     if (!this.#arrayList.value) {
       this.#arrayList = { value };
       this._arr[0] = this.#arrayList;
     } else {
-      this._arr = [
-        ...this._arr.slice(0, addIdx),
+      this._arr.splice(
+        idx,
         0,
-        ...this._arr.slice(addIdx),
-      ];
-      this._arr[addIdx - 1].rest = this._arr[addIdx + 1]
-        ? { value, rest: this._arr[addIdx + 1] }
-        : { value };
-      this._arr[addIdx] = this._arr[addIdx - 1].rest;
+        ((this._arr[idx - 1].rest = this._arr[idx + 1]
+          ? { value, rest: this._arr[idx + 1] }
+          : { value }),
+        this._arr[idx - 1].rest)
+      );
     }
   }
 
@@ -125,7 +133,7 @@ class ArrayList extends Collection {
       this.shift();
     } else {
       this._arr[idx - 1].rest = this._arr[idx + 1];
-      this._arr = [...this._arr.slice(0, idx), ...this._arr.slice(idx + 1)];
+      this._splice(idx, 1);
     }
     if (idx === this.size) delete this.peek.rest;
   }
@@ -134,24 +142,17 @@ class ArrayList extends Collection {
     this._arr[idx].value = value;
   }
 
-  get(idx) {
-    return this._arr[idx].value;
-  }
-
   size() {
-    return super.length;
-  }
-  indexOf(value) {
-    return this._arr.findIndex((val) => val.value === value);
+    return this.length;
   }
   contains(value) {
     return this._arr.findIndex((val) => val.value === value) !== -1;
   }
   toArray() {
-    return this._arr.map((obj) => obj.value);
+    return this._arr.map((node) => node.value);
   }
   clear() {
-    super.clear();
+    this.clear();
     this.#arrayList = {};
   }
 
@@ -167,6 +168,10 @@ class ArrayList extends Collection {
   }
   get peek() {
     return super.peek.value;
+  }
+
+  get(index) {
+    return this._arr[index].value;
   }
 }
 

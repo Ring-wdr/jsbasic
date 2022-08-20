@@ -81,6 +81,17 @@
       //   eventAdd(sjList.children[idx].children[0], idx);
       // }
       subForm.addEventListener("submit", handleSubjectSubmit);
+
+      class Dummy {
+        constructor() {
+          this.date = new Date();
+        }
+      }
+      const darr = [];
+
+      for (let i = 0; i < 100; i += 1) darr.push(new Dummy());
+      const wm = new WeakMap(darr.map((da) => [da, da]));
+      darr.length = 1;
     </script>
   </body>
 </html>

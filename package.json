@@ -25,5 +25,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^1.4.1",
     "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.37"
   }
 }

@@ -32,8 +32,25 @@
       const sjList = document.getElementById("buttonset");
       const subForm = document.getElementById("subInput");
       const subInput = document.querySelector("#subInput input");
-      const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
-
+      // const WEEKS = ["일", "월", "화", "수", "목", "금", "토"];
+      const WEEKS = "일월화수목금토";
+      const debounce = (cb, delay) => {
+        let timer;
+        return (...args) => {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(cb, delay, ...args); // cb(...args) ⇒ cb(100)
+        };
+      };
+      const throttle = (cb, delay) => {
+        let timer;
+        return (...args) => {
+          if (timer) return;
+          timer = setTimeout(() => {
+            cb(...args);
+            timer = null;
+          }, delay);
+        };
+      };
       const weekControl = (() => {
         const widxArr = [];
         return (idx) => {
@@ -71,27 +88,43 @@
       };
 
       //eventListener part
-      sjList.addEventListener("click", (e) => {
-        if (e.target.className === "btn") {
-          const idx = e.target.nextElementSibling.id.replace(/[a-z]/gi, "");
-          e.target.nextElementSibling.innerText = weekControl(idx);
-        }
-      });
+      // sjList.addEventListener("click", (e) => {
+      //   if (e.target.className === "btn") {
+      //     const idx = e.target.nextElementSibling.id.replace(/[a-z]/gi, "");
+      //     e.target.nextElementSibling.innerText = weekControl(idx);
+      //   }
+      // });
       // for (let idx = 0; idx < sjList.childElementCount; idx += 1) {
       //   eventAdd(sjList.children[idx].children[0], idx);
       // }
       subForm.addEventListener("submit", handleSubjectSubmit);
+      // debounce && throttle part
 
-      class Dummy {
-        constructor() {
-          this.date = new Date();
-        }
-      }
-      const darr = [];
+      const $btn1 = document.getElementById("btn1");
+      const $btn2 = document.getElementById("btn2");
 
-      for (let i = 0; i < 100; i += 1) darr.push(new Dummy());
-      const wm = new WeakMap(darr.map((da) => [da, da]));
-      darr.length = 1;
+      // $btn1.onclick = debounce(() => {
+      //   $btn1.nextElementSibling.innerText = weekControl(1);
+      // }, 500);
+      // $btn2.onclick = throttle(() => {
+      //   $btn2.nextElementSibling.innerText = weekControl(2);
+      // }, 500);
+      const dbnc = debounce(() => {
+        $btn1.nextElementSibling.innerText = weekControl(1);
+      }, 500);
+      const thrt = throttle(() => {
+        $btn2.nextElementSibling.innerText = weekControl(2);
+      }, 500);
+      $btn1.addEventListener("click", () => {
+        dbnc();
+      });
+      $btn2.addEventListener("click", () => {
+        thrt();
+      });
+
+      // subForm.oninput = debounce(() => {
+      //   console.log(new Date(), "search>>", subInput.value);
+      // }, 500);
     </script>
   </body>
 </html>

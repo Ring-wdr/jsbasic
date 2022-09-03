@@ -5,8 +5,6 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-
 rl.on("line", (line) => {
   // console.log("input: ", line);
   const [year, month, day = 0] = line.split(" ");
@@ -17,8 +15,11 @@ rl.on("line", (line) => {
       Array(7).fill("  "),
       Array(7).fill("  "),
       Array(7).fill("  "),
-      Array(7).fill("  "),
+      Array(7).fill("  "), // string 무거움
     ];
+    const day = new Date(year, month, 0);
+    // const cnt = day.getDate();
+    // const startDay=
     const dayCnt = new Date(year, month, 0).getDate();
     let week = 0;
     for (let i = 1; i <= dayCnt; i += 1) {

@@ -9,12 +9,12 @@ rl.on("line", (line) => {
   const [year, month, day = 0] = line.split(" ");
   const drawCalander = (year, month, day) => {
     const calander = [
-      Array(7).fill("  "),
-      Array(7).fill("  "),
-      Array(7).fill("  "),
-      Array(7).fill("  "),
-      Array(7).fill("  "),
-      Array(7).fill("  "),
+      Array(7),
+      Array(7),
+      Array(7),
+      Array(7),
+      Array(7),
+      Array(7),
     ];
     const monthDays = [
       0,
@@ -46,8 +46,13 @@ rl.on("line", (line) => {
         String(i + 1).padStart(2, "  ");
     }
     console.log(`   ${year}년 ${month}월`);
-    console.log("일 월 화 수 목 금 토");
-    calander.forEach((week) => console.log(week.join(" ")));
+    console.log(
+      "일월화수목금토"
+        .split("")
+        .map((w) => `${w}\t`)
+        .join("")
+    );
+    calander.forEach((week) => console.log(week.join("\t")));
   };
 
   drawCalander(year, month, day);

@@ -26,6 +26,7 @@
     "nodemon": "^1.4.1",
     "prettier": "^2.7.1"
   },
+  "type": "module",
   "dependencies": {
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37"

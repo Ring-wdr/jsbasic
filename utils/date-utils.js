@@ -39,6 +39,4 @@ const calandar = (year, month, day) => {
   cal.forEach((week) => console.log(week.join("\t")));
 };
 
-// console.log(calandar(2022, 8));
-
 export { WEEKS, calandar };

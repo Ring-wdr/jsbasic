@@ -1,10 +1,11 @@
-import { debounce, throttle } from "../../utils/timer-utils.js";
+import { debounce, throttle } from "../utils/timer-utils.js";
 
 class Dummy {
   constructor() {
     this.date = new Date();
   }
 }
+console.log(3 ** 5);
 
 const darr = [];
 for (let i = 0; i < 100; i += 1) darr.push(new Dummy());

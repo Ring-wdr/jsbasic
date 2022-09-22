@@ -1,15 +1,12 @@
 function MyPromise(cb) {
   const promise = { state: "pending" };
-  let first, second;
   const resolve = (input) => {
     console.log("resolve", input);
     promise.state = "resolve";
-    first = input;
   };
   const reject = (input) => {
     console.log("reject", input);
     promise.state = "reject";
-    second = input;
   };
   cb(resolve, reject);
   return promise;

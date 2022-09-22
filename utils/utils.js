@@ -9,4 +9,11 @@ const deepCopy = (arrobj) => {
   return copyObj;
 };
 
-export { deepCopy };
+const promiseFn = (id = 1) =>
+  new Promise((resolve, reject) => {
+    console.log("id>>", id);
+    if (id < 7) resolve(id + 1);
+    else reject(new Error("어디로?" + id));
+  });
+
+export { deepCopy, promiseFn };

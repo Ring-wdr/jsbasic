@@ -38,7 +38,9 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@ringwring/forfun": "^1.0.1",
+    "co": "^4.6.0",
     "moment": "^2.29.4",
-    "moment-timezone": "^0.5.37"
+    "moment-timezone": "^0.5.37",
+    "node-fetch": "^3.2.10"
   }
 }
